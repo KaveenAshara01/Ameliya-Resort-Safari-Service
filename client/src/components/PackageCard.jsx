@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import MediaCarousel from './MediaCarousel';
 
 function PackageCard({ package: pkg }) {
-  const [imageError, setImageError] = useState(false);
-
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -11,23 +9,24 @@ function PackageCard({ package: pkg }) {
     }).format(price);
   };
 
+  // Backward compatibility: if old image field exists, convert it to images array
+  const images = pkg.images && pkg.images.length > 0 
+    ? pkg.images 
+    : pkg.image 
+      ? [pkg.image] 
+      : [];
+  const videos = pkg.videos || [];
+
   return (
     <div className="card group">
       <div className="relative h-64 overflow-hidden bg-gray-200">
-        {!imageError ? (
-          <img
-            src={`http://localhost:5000${pkg.image}`}
-            alt={pkg.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary-400 to-cyan-400 flex items-center justify-center">
-            <span className="text-white text-4xl font-bold">{pkg.title.charAt(0)}</span>
-          </div>
-        )}
+        <MediaCarousel
+          images={images}
+          videos={videos}
+          baseUrl="http://localhost:5000"
+        />
         {pkg.featured && (
-          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold">
+          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold z-20">
             Featured
           </div>
         )}
