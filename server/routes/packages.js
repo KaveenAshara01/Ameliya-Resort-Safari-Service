@@ -19,18 +19,25 @@ const storage = multer.diskStorage({
 
 // File filter for images and videos
 const fileFilter = (req, file, cb) => {
-  const imageTypes = /jpeg|jpg|png|gif|webp/;
-  const videoTypes = /mp4|webm|ogg|mov|avi/;
   const extname = path.extname(file.originalname).toLowerCase().replace('.', '');
   const mimetype = file.mimetype;
-  
-  if (imageTypes.test(extname) && imageTypes.test(mimetype)) {
-    return cb(null, true);
-  } else if (videoTypes.test(extname) && videoTypes.test(mimetype)) {
-    return cb(null, true);
-  } else {
-    cb(new Error('Only image and video files are allowed'));
+
+  const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+  const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'avi'];
+
+  if (imageExts.includes(extname)) {
+    if (mimetype.startsWith('image/') || mimetype === 'application/octet-stream') {
+      return cb(null, true);
+    }
   }
+
+  if (videoExts.includes(extname)) {
+    if (mimetype.startsWith('video/') || mimetype === 'application/octet-stream' || mimetype === 'application/ogg') {
+      return cb(null, true);
+    }
+  }
+
+  cb(new Error('Only image and video files are allowed'));
 };
 
 const upload = multer({
@@ -90,10 +97,10 @@ router.post('/', auth, upload.fields([
 ]), async (req, res) => {
   try {
     const { title, description, price, featured } = req.body;
-    
+
     const imageFiles = req.files?.images || [];
     const videoFiles = req.files?.videos || [];
-    
+
     if (imageFiles.length === 0 && videoFiles.length === 0) {
       return res.status(400).json({ message: 'At least one image or video is required' });
     }
@@ -195,7 +202,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     // Delete all associated files (handle both new and old format)
     const allFiles = [
-      ...(package.images || []), 
+      ...(package.images || []),
       ...(package.videos || []),
       ...(package.image ? [package.image] : []) // Backward compatibility
     ];
