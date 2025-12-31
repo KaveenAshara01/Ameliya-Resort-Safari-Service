@@ -34,3 +34,4 @@ async function createAdmin() {
 
 createAdmin();
 
+// http://localhost:3000/admin/login for admin login

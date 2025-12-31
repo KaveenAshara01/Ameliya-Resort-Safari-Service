@@ -19,6 +19,25 @@ export default {
           800: '#075985',
           900: '#0c4a6e',
         }
+      },
+      keyframes: {
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        }
+      },
+      animation: {
+        'fade-in': 'fade-in 1s ease-out',
+        'fade-in-up': 'fade-in-up 1s ease-out forwards',
+        marquee: 'marquee 30s linear infinite',
       }
     },
   },

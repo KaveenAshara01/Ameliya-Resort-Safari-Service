@@ -33,8 +33,8 @@ function AdminLogin() {
             <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-2xl">A</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
-            <p className="text-gray-600 mt-2">Sign in to manage packages</p>
+            <h2 className="text-3xl font-bold text-gray-900">Ameliya Elephant Safari Service</h2>
+            <p className="text-gray-600 mt-2">Admin Dashboard Login</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PackageCard from '../components/PackageCard';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import Testimonials from '../components/Testimonials';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 
@@ -29,15 +31,15 @@ function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
       <Header />
       <Hero />
-      
-      <section className="py-20 px-4">
+
+      <section id="packages" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Explore Our Premium Packages
+              Popular Packages
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Discover unforgettable travel experiences crafted just for you
+              Hand-picked experiences for your perfect holiday
             </p>
           </div>
 
@@ -50,18 +52,37 @@ function Home() {
               <p className="text-gray-600 text-xl">No packages available at the moment.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {packages.map((pkg) => (
-                <PackageCard key={pkg._id} package={pkg} />
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {packages
+                  .filter(pkg => pkg.featured) // Prioritize featured
+                  .concat(packages.filter(pkg => !pkg.featured)) // Then others
+                  .slice(0, 3) // Take top 3
+                  .map((pkg) => (
+                    <PackageCard key={pkg._id} package={pkg} />
+                  ))}
+              </div>
+
+              <div className="text-center">
+                <Link
+                  to="/packages"
+                  className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors text-lg group"
+                >
+                  See All Packages
+                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </section>
 
+      <Testimonials />
       <ContactSection />
       <Footer />
-    </div>
+    </div >
   );
 }
 
