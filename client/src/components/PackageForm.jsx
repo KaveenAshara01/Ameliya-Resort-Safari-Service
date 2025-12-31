@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const [formData, setFormData] = useState({
@@ -41,7 +43,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files);
-    
+
     // Create previews
     const previews = files.map(file => ({
       file,
@@ -54,7 +56,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const handleVideosChange = (e) => {
     const files = Array.from(e.target.files);
     setVideos(files);
-    
+
     // Create previews
     const previews = files.map(file => ({
       file,
@@ -89,7 +91,7 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     // Validate that at least one image or video exists
     const totalMedia = existingImages.length + existingVideos.length + images.length + videos.length;
     if (totalMedia === 0) {
@@ -106,11 +108,11 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
       data.append('description', formData.description);
       data.append('price', formData.price);
       data.append('featured', formData.featured);
-      
+
       // Append existing media arrays
       data.append('existingImages', JSON.stringify(existingImages));
       data.append('existingVideos', JSON.stringify(existingVideos));
-      
+
       // Append new files
       images.forEach((image) => {
         data.append('images', image);
@@ -183,14 +185,22 @@ function PackageForm({ package: pkg, onSuccess, onCancel }) {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Description *
           </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="input-field"
-            rows="4"
-            required
-          ></textarea>
+          <div className="bg-white">
+            <ReactQuill
+              theme="snow"
+              value={formData.description}
+              onChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
+              className="h-64 mb-12"
+              modules={{
+                toolbar: [
+                  [{ 'header': [1, 2, false] }],
+                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                  ['link', 'clean']
+                ],
+              }}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
