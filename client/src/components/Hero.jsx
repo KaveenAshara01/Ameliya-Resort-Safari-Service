@@ -12,10 +12,10 @@ function Hero() {
 
       <div className="relative max-w-7xl mx-auto text-center z-10">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in drop-shadow-lg">
-          Your Journey Begins Here
+          Experience the Wild Heart of Sri Lanka
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-          Discover world-class destinations with our carefully curated tourism packages
+          Embark on an unforgettable adventure through national parks and ancient landscapes with our expert safari guides
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
           <a

@@ -32,16 +32,14 @@ function About() {
                     </div>
                     <div className="prose prose-lg mx-auto text-gray-600">
                         <p className="mb-6 text-lg leading-relaxed text-center">
-                            Founded with a passion for exploration and a deep love for Sri Lanka's natural beauty,
-                            Ameliya Elephant Safari Service began as a dream to share the wonders of our island with the world.
-                            We believe that travel is not just about visiting new places, but about creating
-                            memories that last a lifetime.
+                            Founded with a deep respect for Sri Lanka's majestic wildlife,
+                            Ameliya Elephant Safari Service was born from a desire to connect travelers with the untamed beauty of our island.
+                            We specialize in ethical wildlife encounters that honor nature while creating breathtaking memories.
                         </p>
                         <p className="text-lg leading-relaxed text-center">
-                            From the misty mountains of Ella to the golden beaches of Mirissa, and the
-                            wild safaris of Yala, our team of experienced guides and travel planners
-                            works tirelessly to curate exceptional experiences that showcase the very best
-                            of Sri Lankan hospitality and culture.
+                            From the legendary elephant gatherings of Minneriya to the leopard-rich zones of Yala,
+                            our expert naturalists guide you through the island's most spectacular ecosystems.
+                            We are committed to conservation and providing you with an immersive, respectful, and thrilling safari experience.
                         </p>
                     </div>
                 </div>

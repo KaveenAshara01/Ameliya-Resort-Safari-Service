@@ -8,7 +8,7 @@ function Footer() {
           <div>
             <h3 className="text-white text-xl font-bold mb-4">Ameliya Elephant Safari Service</h3>
             <p className="text-sm">
-              Your trusted partner for premium tourism experiences. Discover the world with us.
+              Your premier partner for ethical elephant safaris and authentic Sri Lankan wilderness experiences.
             </p>
           </div>
           <div>

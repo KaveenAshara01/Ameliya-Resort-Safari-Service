@@ -5,7 +5,7 @@ function Testimonials() {
             name: "Sarah Johnson",
             role: "Adventure Enthusiast",
             location: "United Kingdom",
-            image: "BJ",
+            image: "/images/testimonials/sarah.png",
             content: "The safari experience was absolutely magical! Seeing elephants in the wild at sunset is a memory I'll cherish forever. The guide was incredibly knowledgeable and friendly.",
             rating: 5
         },
@@ -14,7 +14,7 @@ function Testimonials() {
             name: "Michael Chen",
             role: "Photography Lover",
             location: "Singapore",
-            image: "MC",
+            image: "/images/testimonials/michael.png",
             content: "Perfectly organized tour. The accommodations were top-notch, and the transportation was comfortable. I got some amazing shots of the leopards in Yala!",
             rating: 5
         },
@@ -23,7 +23,7 @@ function Testimonials() {
             name: "Emma & David",
             role: "Honeymooners",
             location: "Australia",
-            image: "ED",
+            image: "/images/testimonials/emma_david.png",
             content: "We couldn't have asked for a better honeymoon. Everything was taken care of, allowing us to just relax and enjoy the beautiful scenery of Sri Lanka.",
             rating: 5
         },
@@ -32,7 +32,7 @@ function Testimonials() {
             name: "Hans Muller",
             role: "Nature Explorer",
             location: "Germany",
-            image: "HM",
+            image: "/images/testimonials/hans.png",
             content: "A truly authentic experience. The cultural tours mixed with the wildlife adventures gave us a complete picture of this wonderful island.",
             rating: 4
         },
@@ -41,7 +41,7 @@ function Testimonials() {
             name: "Jessica Williams",
             role: "Solo Traveler",
             location: "USA",
-            image: "JW",
+            image: "/images/testimonials/jessica.png",
             content: "As a solo female traveler, safety was my priority. Ameliya Elephant Safari Service made me feel safe and welcome throughout the entire journey. Highly recommended!",
             rating: 5
         }
@@ -70,9 +70,11 @@ function Testimonials() {
                                 className="w-[350px] md:w-[400px] flex-shrink-0 bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 mx-4 whitespace-normal"
                             >
                                 <div className="flex items-center gap-4 mb-4">
-                                    <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-bold text-lg">
-                                        {testimonial.image}
-                                    </div>
+                                    <img
+                                        src={testimonial.image}
+                                        alt={testimonial.name}
+                                        className="w-12 h-12 rounded-full object-cover shadow-sm"
+                                    />
                                     <div>
                                         <h3 className="font-semibold text-gray-900">{testimonial.name}</h3>
                                         <p className="text-sm text-gray-500">{testimonial.location}</p>
