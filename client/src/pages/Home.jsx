@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PackageCard from '../components/PackageCard';
@@ -11,10 +11,34 @@ import Footer from '../components/Footer';
 function Home() {
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     fetchPackages();
   }, []);
+
+  const scrollContainerRef = useRef(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    let animationFrameId;
+
+    const scroll = () => {
+      if (!isPaused) {
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+          scrollContainer.scrollLeft = 0;
+        } else {
+          scrollContainer.scrollLeft += 1.5;
+        }
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [packages, isPaused]);
 
   const fetchPackages = async () => {
     try {
@@ -53,7 +77,8 @@ function Home() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {/* Desktop Grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 {packages
                   .filter(pkg => pkg.featured) // Prioritize featured
                   .concat(packages.filter(pkg => !pkg.featured)) // Then others
@@ -61,6 +86,33 @@ function Home() {
                   .map((pkg) => (
                     <PackageCard key={pkg._id} package={pkg} />
                   ))}
+              </div>
+
+              {/* Mobile Marquee */}
+              {/* Mobile Marquee / Swipeable Auto-Scroll */}
+              <div className="md:hidden relative mb-12 -mx-4 group">
+                <div
+                  ref={scrollContainerRef}
+                  className="flex overflow-x-auto gap-8 px-4 scrollbar-hide"
+                  onTouchStart={() => setIsPaused(true)}
+                  onTouchEnd={() => setIsPaused(false)}
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
+                  {(() => {
+                    const sortedPackages = packages
+                      .filter(pkg => pkg.featured)
+                      .concat(packages.filter(pkg => !pkg.featured))
+                      .slice(0, 6);
+
+                    // Duplicate the sorted list for seamless scrolling
+                    return [...sortedPackages, ...sortedPackages].map((pkg, i) => (
+                      <div key={`${pkg._id}-${i}`} className="min-w-[300px] flex-shrink-0 whitespace-normal">
+                        <PackageCard package={pkg} />
+                      </div>
+                    ));
+                  })()}
+                </div>
               </div>
 
               <div className="text-center">
